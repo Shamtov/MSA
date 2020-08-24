@@ -1,6 +1,5 @@
 package ru.msa;
 
-import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -83,7 +82,7 @@ public class BankAccount {
         return Objects.hash(firstName, lastName, patronymic, accountNumber);
     }
 
-    public BankAccount build() throws IOException {
+    public BankAccount build() {
         this.uuid = UUID.randomUUID();
         this.gender = PersonImpl.getRandomGender();
         this.firstName = PersonImpl.getRandomName(this.gender);

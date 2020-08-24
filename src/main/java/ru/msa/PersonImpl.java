@@ -1,6 +1,5 @@
 package ru.msa;
 
-import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PersonImpl {
@@ -24,7 +23,7 @@ public class PersonImpl {
         return p.getFullName();
     }
 
-    public static Person getRandomGender() throws IOException {
+    public static Person getRandomGender() {
         int random = ThreadLocalRandom.current().nextInt(0, 2);
         switch (random) {
             case 0:

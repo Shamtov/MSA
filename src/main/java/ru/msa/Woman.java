@@ -1,12 +1,11 @@
 package ru.msa;
 
-import java.io.IOException;
 import java.util.List;
 
 public class Woman implements Person {
-    private final static String WOMANS_NAMES_PATH = "src/main/resources/WomansNames.txt";
-    private final static String WOMANS_SURNAMES_PATH = "src/main/resources/WomansSurnames.txt";
-    private final static String WOMANS_PATRONYMICS_PATH = "src/main/resources/WomansPatronymics.txt";
+    private final static String WOMANS_NAMES_PATH = "WomansNames.txt";
+    private final static String WOMANS_SURNAMES_PATH = "WomansSurnames.txt";
+    private final static String WOMANS_PATRONYMICS_PATH = "WomansPatronymics.txt";
 
     private static Woman instance;
     private static List<String> names;
@@ -16,7 +15,7 @@ public class Woman implements Person {
     private Woman() {
     }
 
-    public static Woman getInstance() throws IOException {
+    public static Woman getInstance() {
         if (instance == null) {
             instance.init();
             instance = new Woman();
@@ -24,11 +23,10 @@ public class Woman implements Person {
         return instance;
     }
 
-    private static void init() throws IOException {
+    private static void init() {
         names = Person.getList(WOMANS_NAMES_PATH);
         surnames = Person.getList(WOMANS_SURNAMES_PATH);
         patronymics = Person.getList(WOMANS_PATRONYMICS_PATH);
-        System.out.println("Woman init");
     }
 
     @Override

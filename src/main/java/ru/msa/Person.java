@@ -1,8 +1,8 @@
 package ru.msa;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -15,8 +15,9 @@ public interface Person {
 
     String getPatronymics();
 
-    static List<String> getList(String path) throws IOException {
-        return Files.lines(Paths.get(path)).map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toList());
+    static List<String> getList(String path) {
+        return new BufferedReader(new InputStreamReader(Person.class.getClassLoader().getResourceAsStream(path), StandardCharsets.UTF_8))
+                .lines().filter(s -> !s.isEmpty()).collect(Collectors.toList());
     }
 
     static long getRandomNum(long maxNum) {
