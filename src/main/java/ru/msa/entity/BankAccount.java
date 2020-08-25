@@ -1,8 +1,13 @@
-package ru.msa;
+package ru.msa.entity;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import ru.msa.impl.PersonImpl;
 
 import java.util.Objects;
 import java.util.UUID;
 
+@Component
 public class BankAccount {
 
     public BankAccount() {
@@ -14,6 +19,8 @@ public class BankAccount {
     private String patronymic;
     private long accountNumber;
     private Person gender;
+    @Autowired
+    private PersonImpl personImpl;
 
     public UUID getUuid() {
         return uuid;
@@ -84,12 +91,11 @@ public class BankAccount {
 
     public BankAccount build() {
         this.uuid = UUID.randomUUID();
-        this.gender = PersonImpl.getRandomGender();
-        this.firstName = PersonImpl.getRandomName(this.gender);
-        this.lastName = PersonImpl.getRandomSurname(this.gender);
-        this.patronymic = PersonImpl.getPatronymics(this.gender);
+        this.gender = personImpl.getRandomGender();
+        this.firstName = personImpl.getRandomName(this.gender);
+        this.lastName = personImpl.getRandomSurname(this.gender);
+        this.patronymic = personImpl.getPatronymics(this.gender);
         this.accountNumber = Person.getRandomNum(Long.MAX_VALUE);
-
         return this;
     }
 

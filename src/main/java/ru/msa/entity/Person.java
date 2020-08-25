@@ -1,4 +1,4 @@
-package ru.msa;
+package ru.msa.entity;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

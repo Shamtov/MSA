@@ -1,13 +1,16 @@
-package ru.msa;
+package ru.msa.impl;
+
+import org.springframework.stereotype.Component;
+import ru.msa.entity.Person;
 
 import java.util.List;
 
+@Component
 public class Woman implements Person {
     private final static String WOMANS_NAMES_PATH = "WomansNames.txt";
     private final static String WOMANS_SURNAMES_PATH = "WomansSurnames.txt";
     private final static String WOMANS_PATRONYMICS_PATH = "WomansPatronymics.txt";
 
-    private static Woman instance;
     private static List<String> names;
     private static List<String> surnames;
     private static List<String> patronymics;
@@ -15,15 +18,7 @@ public class Woman implements Person {
     private Woman() {
     }
 
-    public static Woman getInstance() {
-        if (instance == null) {
-            instance.init();
-            instance = new Woman();
-        }
-        return instance;
-    }
-
-    private static void init() {
+    {
         names = Person.getList(WOMANS_NAMES_PATH);
         surnames = Person.getList(WOMANS_SURNAMES_PATH);
         patronymics = Person.getList(WOMANS_PATRONYMICS_PATH);
