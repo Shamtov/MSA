@@ -2,9 +2,7 @@ package ru.msa.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.msa.entity.Person;
-import ru.msa.impl.Man;
-import ru.msa.impl.Woman;
+import ru.msa.models.Person;
 
 import java.util.concurrent.ThreadLocalRandom;
 

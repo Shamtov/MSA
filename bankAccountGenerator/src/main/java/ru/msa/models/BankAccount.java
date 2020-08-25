@@ -1,4 +1,4 @@
-package ru.msa.entity;
+package ru.msa.models;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

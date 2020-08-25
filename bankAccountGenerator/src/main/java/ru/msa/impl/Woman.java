@@ -1,7 +1,7 @@
 package ru.msa.impl;
 
 import org.springframework.stereotype.Component;
-import ru.msa.entity.Person;
+import ru.msa.models.Person;
 
 import java.util.List;
 
