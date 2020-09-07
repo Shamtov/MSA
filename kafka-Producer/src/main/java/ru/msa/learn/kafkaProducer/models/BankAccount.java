@@ -1,5 +1,6 @@
 package ru.msa.learn.kafkaProducer.models;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -16,7 +17,7 @@ public class BankAccount {
     private String lastName;
     private String patronymic;
     private long accountNumber;
-    private AccountType accountType;
+    private AccountType accountType = AccountType.CURRENT;
 
     public UUID getUuid() {
         return uuid;

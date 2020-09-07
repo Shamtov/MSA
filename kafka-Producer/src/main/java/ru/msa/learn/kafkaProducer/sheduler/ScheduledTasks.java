@@ -3,6 +3,7 @@ package ru.msa.learn.kafkaProducer.sheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -26,7 +27,7 @@ public class ScheduledTasks {
     @Scheduled(fixedDelayString = "${sheduler.delay}")
     void getAccounts() {
         BankAccount bankAccount = restTemplate.getForObject(strinURL, BankAccount.class);
-        accountService.processChain(bankAccount);
+        accountService.execute(bankAccount);
         System.out.println(bankAccount);
     }
 }
