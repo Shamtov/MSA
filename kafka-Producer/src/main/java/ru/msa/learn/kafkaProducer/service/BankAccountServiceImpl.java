@@ -27,9 +27,4 @@ public class BankAccountServiceImpl implements BankAccountService {
         bankAccount.setAccountType(AccountType.getRandomType());
         return bankAccount;
     }
-
-    @Override
-    public void invokeKafka(BankAccount bankAccount) {
-        System.out.println("to Do");
-    }
 }

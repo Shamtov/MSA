@@ -1,9 +1,10 @@
 package ru.msa.learn.kafkaProducer.sheduler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -13,6 +14,7 @@ import ru.msa.learn.kafkaProducer.service.BankAccountServiceImpl;
 
 @Component
 public class ScheduledTasks {
+    private Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
     @Bean
     public RestTemplate getRestTemplate() {
         return new RestTemplate();
@@ -28,6 +30,6 @@ public class ScheduledTasks {
     void getAccounts() {
         BankAccount bankAccount = restTemplate.getForObject(strinURL, BankAccount.class);
         accountService.execute(bankAccount);
-        System.out.println(bankAccount);
+        logger.info(bankAccount.toString());
     }
 }

@@ -1,12 +1,9 @@
 package ru.msa.learn.kafkaProducer.models;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 import java.util.UUID;
 
-@Component
 public class BankAccount {
 
     public BankAccount() {
