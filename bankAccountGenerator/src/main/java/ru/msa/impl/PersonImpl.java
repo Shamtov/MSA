@@ -17,15 +17,15 @@ public class PersonImpl {
     private Woman woman;
 
     public String getRandomName(Person p) {
-        return p.getName();
+        return p.getName().trim();
     }
 
     public String getRandomSurname(Person p) {
-        return p.getSurname();
+        return p.getSurname().trim();
     }
 
     public String getPatronymics(Person p) {
-        return p.getPatronymics();
+        return p.getPatronymics().trim();
     }
 
     public String getRandomFullName(Person p) {
