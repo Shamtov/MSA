@@ -32,7 +32,7 @@ public class ProduceKafkaImpl implements ProduceKafka {
 
             @Override
             public void onFailure(Throwable throwable) {
-                logger.info("Unable to send message=["
+                logger.error("Unable to send message=["
                         + bankAccount + "] due to : " + throwable.getMessage());
             }
         });
