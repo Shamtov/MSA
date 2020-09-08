@@ -1,19 +1,31 @@
 package ru.msa.learn.kafkaConsumer.models;
 
 
+import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
+import org.springframework.data.cassandra.core.mapping.Column;
+import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
+import org.springframework.data.cassandra.core.mapping.Table;
+
 import java.util.Objects;
 import java.util.UUID;
 
+@Table(value = "bank_accounts")
 public class BankAccount {
 
     public BankAccount() {
     }
 
+    @PrimaryKeyColumn(name = "uu_id", type = PrimaryKeyType.PARTITIONED)
     private UUID uuid;
+    @Column(value = "first_name")
     private String firstName;
+    @Column(value = "last_name")
     private String lastName;
+    @Column(value = "patronymic")
     private String patronymic;
+    @Column(value = "account_number")
     private long accountNumber;
+    @Column(value = "account_type")
     private AccountType accountType = AccountType.CURRENT;
 
     public UUID getUuid() {
