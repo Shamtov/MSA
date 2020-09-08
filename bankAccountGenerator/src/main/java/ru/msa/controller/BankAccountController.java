@@ -10,7 +10,7 @@ public class BankAccountController {
     @Autowired
     private BankAccount bankAccount;
     @GetMapping("account")
-    public BankAccount greeting() {
+    public BankAccount getAccount() {
         return bankAccount.build();
     }
 }
