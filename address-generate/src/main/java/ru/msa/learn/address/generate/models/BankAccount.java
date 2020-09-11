@@ -65,6 +65,19 @@ public class BankAccount {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BankAccount that = (BankAccount) o;
+        return uuid.equals(that.uuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid);
+    }
+
+    @Override
     public String toString() {
         return "BankAccount{" +
                 "uuid=" + uuid +
@@ -72,24 +85,7 @@ public class BankAccount {
                 ", lastName='" + lastName + '\'' +
                 ", patronymic='" + patronymic + '\'' +
                 ", accountNumber=" + accountNumber +
-                ", accountType=" + accountType +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BankAccount that = (BankAccount) o;
-        return accountNumber == that.accountNumber &&
-                firstName.equals(that.firstName) &&
-                lastName.equals(that.lastName) &&
-                Objects.equals(patronymic, that.patronymic);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstName, lastName, patronymic, accountNumber);
+                ", accountType=" + accountType;
     }
 
 }

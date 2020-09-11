@@ -13,7 +13,7 @@ import org.springframework.kafka.annotation.KafkaStreamsDefaultConfiguration;
 import org.springframework.kafka.config.KafkaStreamsConfiguration;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import ru.msa.learn.address.generate.models.BankAccount;
+import ru.msa.learn.address.generate.models.Address;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,8 +36,8 @@ public class KafkaStreamConfig {
         return new KafkaStreamsConfiguration(config);
     }
     @Bean
-    public Serde<BankAccount> bankAccountSerde() {
-        return Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(BankAccount.class));
+    public Serde<Address> addressSerde() {
+        return Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(Address.class));
     }
     @Bean
     public ObjectMapper getObjectMapper() {
