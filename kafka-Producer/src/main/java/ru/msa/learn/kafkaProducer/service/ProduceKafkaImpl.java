@@ -22,7 +22,7 @@ public class ProduceKafkaImpl implements ProduceKafka {
 
     @Override
     public void sendMessage(BankAccount bankAccount) {
-        ListenableFuture<SendResult<String, BankAccount>> future = kafkaTemplate.send(topic, bankAccount);
+        ListenableFuture<SendResult<String, BankAccount>> future = kafkaTemplate.send(topic, bankAccount.getUuid().toString(), bankAccount);
         future.addCallback(new ListenableFutureCallback<>() {
             @Override
             public void onSuccess(SendResult<String, BankAccount> result) {
