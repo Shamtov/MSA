@@ -10,17 +10,18 @@ import ru.msa.learn.kafkaConsumer.models.BankAccount;
 import java.util.List;
 
 @Service
-public class ConsumerKafkaImpl implements ConsumerKafka {
+public class ConsumerKafkaImpl implements ConsumerKafka<BankAccount> {
 
     private Logger log = LoggerFactory.getLogger(ConsumerKafkaImpl.class);
     @Autowired
     private List<BankAccount> accounts;
+
     @Override
     @KafkaListener(topics = "${kafka.topic.name}", groupId = "#'${kafka.group.id}'")
     public void receiveMessage(BankAccount bankAccount) {
         try {
             accounts.add(bankAccount);
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             log.error("Unable to save data in Cassandra due to : " + e.getMessage());
         }
     }

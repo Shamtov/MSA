@@ -17,7 +17,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Override
     public void saveAllAccounts(List<BankAccount> bankAccount) {
-        log.info("Save account in Cassandra" + bankAccount.toString());
+        //log.info("Save account in Cassandra" + bankAccount.toString());
         bankAccountRepository.saveAll(bankAccount).subscribe();
     }
 }

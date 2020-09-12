@@ -1,6 +1,8 @@
 package ru.msa.learn.kafkaConsumer.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
@@ -10,6 +12,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Table(value = "bank_accounts")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BankAccount {
 
     public BankAccount() {
