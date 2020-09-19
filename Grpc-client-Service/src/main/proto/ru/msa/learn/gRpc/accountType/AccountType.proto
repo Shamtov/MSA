@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package gRpc.account;
+option java_package = "ru.msa.learn";
+option java_multiple_files = true;
+
+enum AccountTypeMessage {
+  UNKNOWN = 0;
+  CURRENT = 1;
+  SAVINGS = 2;
+  RECURRING_DEPOSIT = 3;
+  FIXED_DEPOSIT = 4;
+}
+
+message RequestMessage {
+  AccountTypeMessage type = 1;
+}
+
+message UUID {
+  string uuid = 1;
+}
+message AddressMessage {
+  string street = 1;
+  string city = 2;
+  string state = 3;
+}
+
+message BankAccountMessage {
+  string firstName = 1;
+  string lastName = 2;
+  string patronymic = 3;
+  int64 accountNumber = 4;
+  AccountTypeMessage type = 5;
+}
+message BankAccountInfoMessage {
+  UUID uuid = 1;
+  BankAccountMessage account = 2;
+  AddressMessage address = 3;
+}
+
+service Request {
+  rpc GetBankAccountInfo (RequestMessage) returns (stream BankAccountInfoMessage);
+}
+
+
+
