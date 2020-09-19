@@ -1,15 +1,15 @@
-package ru.msa.learn.kafkaConsumer.models;
+package ru.msa.learn.cassandra.request.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @UserDefinedType("address")
-public class Address {
+public class Address implements Serializable {
     @Column("street")
     String street;
     @Column("city")

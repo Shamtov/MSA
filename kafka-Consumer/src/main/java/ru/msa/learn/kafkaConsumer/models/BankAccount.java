@@ -7,18 +7,19 @@ import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
 import java.util.Objects;
 import java.util.UUID;
 
-@Table(value = "bank_accounts")
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@Table(value = "bank_accounts")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@UserDefinedType("bankaccount")
 public class BankAccount {
 
     public BankAccount() {
     }
-
+    @Column(value = "uu_id")
     @PrimaryKeyColumn(name = "uu_id", type = PrimaryKeyType.PARTITIONED)
     private UUID uuid;
     @Column(value = "first_name")
@@ -32,12 +33,11 @@ public class BankAccount {
     @Column(value = "account_type")
     private AccountType accountType = AccountType.CURRENT;
 
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
     public UUID getUuid() {
         return uuid;
-    }
-
-    public void setUuid() {
-        this.uuid = uuid;
     }
 
     public String getFirstName() {
@@ -107,5 +107,4 @@ public class BankAccount {
     public int hashCode() {
         return Objects.hash(firstName, lastName, patronymic, accountNumber);
     }
-
 }

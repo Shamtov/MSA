@@ -1,32 +1,34 @@
-package ru.msa.learn.kafkaConsumer.models;
+package ru.msa.learn.cassandra.request.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.*;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Table("bankaccountinfo")
-public class BankAccountInfo {
+public class BankAccountInfo implements Serializable {
     @PrimaryKeyColumn(name = "uu_id",type = PrimaryKeyType.PARTITIONED)
     private UUID uuid;
 
-    //@CassandraType(type = CassandraType.Name.UDT, userTypeName = "bankaccount")
-    @Column
     @Frozen
+    @Column
+    //@CassandraType(type = CassandraType.Name.UDT, userTypeName = "bankaccount")
     private BankAccount bankAccount;
 
-    //@CassandraType(type = CassandraType.Name.UDT, userTypeName = "address")
-    @Column
     @Frozen
+    @Column
+    //@CassandraType(type = CassandraType.Name.UDT, userTypeName = "address")
     private Address address;
 
     public BankAccountInfo() {
     }
-    public BankAccountInfo(BankAccount bankAccount, Address address) {
+
+    public BankAccountInfo(UUID uuid, BankAccount bankAccount, Address address) {
+        this.uuid = uuid;
         this.bankAccount = bankAccount;
         this.address = address;
     }

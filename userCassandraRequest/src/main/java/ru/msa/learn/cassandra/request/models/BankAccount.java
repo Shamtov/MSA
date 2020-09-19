@@ -1,25 +1,21 @@
 package ru.msa.learn.cassandra.request.models;
 
 
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
-import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
+import java.io.Serializable;
 import java.util.Objects;
-import java.util.UUID;
 
-@Table(value = "bank_accounts")
-public class BankAccount {
+@UserDefinedType("bankaccount")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+public class BankAccount implements Serializable {
 
     public BankAccount() {
     }
 
-    @PrimaryKeyColumn(name = "uu_id", type = PrimaryKeyType.PARTITIONED)
-    private UUID uuid;
-
-    public BankAccount(UUID uuid, String firstName, String lastName, String patronymic, long accountNumber, AccountType accountType) {
-        this.uuid = uuid;
+    public BankAccount(String firstName, String lastName, String patronymic, long accountNumber, AccountType accountType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;
@@ -37,14 +33,6 @@ public class BankAccount {
     private long accountNumber;
     @Column(value = "account_type")
     private AccountType accountType = AccountType.CURRENT;
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid() {
-        this.uuid = uuid;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -89,7 +77,6 @@ public class BankAccount {
     @Override
     public String toString() {
         return "BankAccount{" +
-                "uuid=" + uuid +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", patronymic='" + patronymic + '\'' +

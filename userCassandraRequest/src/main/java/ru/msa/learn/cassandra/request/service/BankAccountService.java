@@ -5,6 +5,6 @@ import ru.msa.learn.cassandra.request.models.BankAccount;
 
 import java.util.UUID;
 
-public interface BankAccountService {
-    Mono<BankAccount> getAccountByUuid(UUID uuid);
+public interface BankAccountService <T> {
+    Mono<T> getAccountByUuid(UUID uuid);
 }
