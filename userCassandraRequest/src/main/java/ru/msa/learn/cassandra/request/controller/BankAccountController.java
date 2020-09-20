@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RestController
 public class BankAccountController {
-    Logger log = LoggerFactory.getLogger(BankAccountController.class);
+    private final Logger log = LoggerFactory.getLogger(BankAccountController.class);
     @Autowired
     BankAccountServiceImpl service;
 
