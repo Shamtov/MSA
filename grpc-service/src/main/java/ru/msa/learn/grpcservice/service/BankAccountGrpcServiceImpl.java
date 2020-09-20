@@ -26,7 +26,7 @@ public class BankAccountGrpcServiceImpl extends RequestGrpc.RequestImplBase {
         Flux<BankAccountInfo> accounts = service.getAccounts();
         List<BankAccountInfo> filteredList = getBankAccountInfos(accountTypeMessage, accounts);
         filteredList.forEach(bankAccountInfo -> {
-            BankAccountInfoMessage message = createBankAccountInfoMessage(createUUIDMessage(bankAccountInfo), createAccountTypeMessage(bankAccountInfo, accountTypeMessage), createAddressMessage(bankAccountInfo));
+            BankAccountInfoMessage message = createBankAccountInfoMessage(bankAccountInfo);
             responseObserver.onNext(message);
             log.info("Server responded " + message);
         });
@@ -42,14 +42,14 @@ public class BankAccountGrpcServiceImpl extends RequestGrpc.RequestImplBase {
                 .build();
     }
 
-    private BankAccountMessage createAccountTypeMessage(BankAccountInfo info, AccountTypeMessage accountTypeMessage) {
+    private BankAccountMessage createAccountTypeMessage(BankAccountInfo info) {
         return BankAccountMessage
                 .newBuilder()
                 .setFirstName(info.getBankAccount().getFirstName())
                 .setLastName(info.getBankAccount().getLastName())
                 .setPatronymic(info.getBankAccount().getPatronymic())
                 .setAccountNumber(info.getBankAccount().getAccountNumber())
-                .setType(accountTypeMessage)
+                .setType(AccountTypeMessage.valueOf(info.getBankAccount().getAccountType().name()))
                 .build();
     }
 
@@ -59,12 +59,12 @@ public class BankAccountGrpcServiceImpl extends RequestGrpc.RequestImplBase {
                 .build();
     }
 
-    private BankAccountInfoMessage createBankAccountInfoMessage(UUID uuid, BankAccountMessage accountMessage, AddressMessage addressMessage) {
+    private BankAccountInfoMessage createBankAccountInfoMessage(BankAccountInfo info) {
         BankAccountInfoMessage bankAccountInfoMessage = BankAccountInfoMessage
                 .newBuilder()
-                .setUuid(uuid)
-                .setAccount(accountMessage)
-                .setAddress(addressMessage)
+                .setUuid(createUUIDMessage(info))
+                .setAccount(createAccountTypeMessage(info))
+                .setAddress(createAddressMessage(info))
                 .build();
         return bankAccountInfoMessage;
     }
