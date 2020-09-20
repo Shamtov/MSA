@@ -20,8 +20,7 @@ public class ScheduledTask {
     @Autowired
     private BankAccountServiceImpl accountService;
 
-    @Scheduled(fixedDelayString = "${sheduler.delay}")
-    @Transactional
+    //@Scheduled(fixedDelayString = "${sheduler.delay}")
     void saveAccounts() {
         if (accounts.size() > 0) {
             accountService.saveAllAccounts(accounts);

@@ -1,14 +1,29 @@
-package ru.msa.learn.grpc.client.model;
+package ru.msa.learn.grpcservice.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
+import org.springframework.data.cassandra.core.mapping.Column;
+import org.springframework.data.cassandra.core.mapping.Frozen;
+import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
+import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.util.Objects;
 import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@Table("bankaccountinfo")
 public class BankAccountInfo {
+    @PrimaryKeyColumn(name = "uu_id",type = PrimaryKeyType.PARTITIONED)
     private UUID uuid;
+
+    @Frozen
+    @Column
+    //@CassandraType(type = CassandraType.Name.UDT, userTypeName = "bankaccount")
     private BankAccount bankAccount;
+
+    @Frozen
+    @Column
+    //@CassandraType(type = CassandraType.Name.UDT, userTypeName = "address")
     private Address address;
 
     public BankAccountInfo() {
@@ -27,10 +42,6 @@ public class BankAccountInfo {
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
-    public void setUuid(String uuid) {
-        this.uuid = UUID.fromString(uuid);
-    }
-
     public BankAccount getBankAccount() {
         return bankAccount;
     }

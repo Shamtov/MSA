@@ -1,25 +1,27 @@
-package ru.msa.learn.kafkaConsumer.models;
+package ru.msa.learn.grpcservice.model;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
 import java.util.Objects;
-import java.util.UUID;
 
-//@Table(value = "bank_accounts")
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @UserDefinedType("bankaccount")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class BankAccount {
 
     public BankAccount() {
     }
-    @Column(value = "uu_id")
-    //@PrimaryKeyColumn(name = "uu_id", type = PrimaryKeyType.PARTITIONED)
-    private UUID uuid;
+
+    public BankAccount(String firstName, String lastName, String patronymic, long accountNumber, AccountType accountType) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.patronymic = patronymic;
+        this.accountNumber = accountNumber;
+        this.accountType = accountType;
+    }
+
     @Column(value = "first_name")
     private String firstName;
     @Column(value = "last_name")
@@ -30,13 +32,6 @@ public class BankAccount {
     private long accountNumber;
     @Column(value = "account_type")
     private AccountType accountType = AccountType.CURRENT;
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-    public UUID getUuid() {
-        return uuid;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -81,7 +76,6 @@ public class BankAccount {
     @Override
     public String toString() {
         return "BankAccount{" +
-                "uuid=" + uuid +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", patronymic='" + patronymic + '\'' +
@@ -105,4 +99,5 @@ public class BankAccount {
     public int hashCode() {
         return Objects.hash(firstName, lastName, patronymic, accountNumber);
     }
+
 }

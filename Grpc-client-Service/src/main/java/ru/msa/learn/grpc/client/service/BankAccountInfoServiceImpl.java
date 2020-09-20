@@ -1,17 +1,14 @@
 package ru.msa.learn.grpc.client.service;
 
-import io.netty.channel.ConnectTimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
-import ru.msa.learn.AccountTypeMessage;
-import ru.msa.learn.BankAccountMessage;
-import ru.msa.learn.RequestGrpc;
-import ru.msa.learn.RequestMessage;
-import ru.msa.learn.grpc.client.controller.BankAccountInfoController;
+import ru.msa.learn.*;
 import ru.msa.learn.grpc.client.model.AccountType;
+import ru.msa.learn.grpc.client.model.Address;
+import ru.msa.learn.grpc.client.model.BankAccount;
 import ru.msa.learn.grpc.client.model.BankAccountInfo;
 
 import java.util.ArrayList;
@@ -19,29 +16,25 @@ import java.util.List;
 
 
 @Service
-public class BankAccountInfoServiceImpl extends RequestGrpc.RequestImplBase {
-    private Logger log = LoggerFactory.getLogger(BankAccountInfoServiceImpl.class);
+public class BankAccountInfoServiceImpl {
+    private final Logger log = LoggerFactory.getLogger(BankAccountInfoServiceImpl.class);
     @Autowired
     RequestGrpc.RequestBlockingStub blockingStub;
-    @Autowired
-    private List<BankAccountInfo> list;
 
     public Flux<BankAccountInfo> getAccountByType(AccountType type) {
+        List<BankAccountInfo> list = getList();
         try {
             blockingStub.getBankAccountInfo(RequestMessage.
                     newBuilder().
                     setType(AccountTypeMessage.valueOf(type.name()))
                     .build()).
                     forEachRemaining(bankAccountInfoMessage -> {
-                        log.info("Received message :" + list);
-                        list.add(new BankAccountInfo(bankAccountInfoMessage.getUuid(),
-                                bankAccountInfoMessage.getAccount(),
-                                bankAccountInfoMessage.getAddress()));
+                        //log.info("Received message :" + bankAccountInfoMessage);
+                        list.add(parseObject(bankAccountInfoMessage));
                     });
         } catch (Exception e) {
             log.error(e.getCause() + e.getMessage() + e.getStackTrace());
         }
-
         return Flux.fromIterable(list);
     }
 
@@ -52,5 +45,25 @@ public class BankAccountInfoServiceImpl extends RequestGrpc.RequestImplBase {
             }
         }
         return false;
+    }
+
+    private List<BankAccountInfo> getList(){
+        return new ArrayList<>(100);
+    }
+
+    private BankAccountInfo parseObject(BankAccountInfoMessage message) {
+        BankAccountInfo bankAccountInfo = new BankAccountInfo();
+        bankAccountInfo.setUuid(message.getUuid().getUuid());
+        BankAccount bankAccount = new BankAccount(message.getAccountOrBuilder().getFirstName(),
+                message.getAccountOrBuilder().getLastName(),
+                message.getAccountOrBuilder().getPatronymic(),
+                message.getAccountOrBuilder().getAccountNumber(),
+                AccountType.valueOf(message.getAccountOrBuilder().getType().name()));
+        Address address = new Address(message.getAddressOrBuilder().getStreet(),
+                message.getAddressOrBuilder().getCity(),
+                message.getAddressOrBuilder().getState());
+        bankAccountInfo.setBankAccount(bankAccount);
+        bankAccountInfo.setAddress(address);
+        return bankAccountInfo;
     }
 }
